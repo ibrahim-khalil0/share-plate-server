@@ -43,6 +43,26 @@ run().catch(console.dir);
 // all crud operation is here 
 
 
+// database collection 
+const foodsCollection = client.db('foodsDB').collection('totalFoods')
+
+
+// add food 
+app.post('/foods', async(req, res) => {
+    const newFood = req.body
+    const result = await foodsCollection.insertOne(newFood)
+    res.send(result)
+})
+
+
+
+// get all food api
+app.get('/foods', async(req, res) => {
+    const result = await foodsCollection.find().toArray()
+    res.send(result)
+})
+
+
 
 
 
