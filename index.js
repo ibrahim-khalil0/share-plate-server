@@ -45,6 +45,8 @@ run().catch(console.dir);
 
 // database collection 
 const foodsCollection = client.db('foodsDB').collection('totalFoods')
+const requestCollection = client.db('foodDB').collection('requestedFood')
+
 
 
 // add food 
@@ -56,12 +58,12 @@ app.post('/foods', async(req, res) => {
 
 
 
-// get all food api
+// get all food and single user posted food api
 app.get('/foods', async(req, res) => {
 
     let query = {}
     if(req.query?.email){
-      query = {userEmail: req.query.email}
+      query = {donatorEmail: req.query.email}
     }
 
     const result = await foodsCollection.find(query).toArray()
@@ -80,7 +82,28 @@ app.get('/food/:id', async(req, res) => {
 
 
 
-// get single user posted foods
+
+
+// requested food collection api here 
+
+// post requested food 
+app.post('/request', async(req, res) => {
+  const newFood = req.body
+  const result = await requestCollection.insertOne(newFood)
+  res.send(result)
+})
+
+
+
+// get my all requested foods
+app.get('/requestedFoods', async(req, res) => {
+
+  let query = {requesterEmail: req.query.email}
+
+  const result = await requestCollection.find(query).toArray()
+  res.send(result)
+})
+
 
 
 
