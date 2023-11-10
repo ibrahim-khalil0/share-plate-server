@@ -58,7 +58,13 @@ app.post('/foods', async(req, res) => {
 
 // get all food api
 app.get('/foods', async(req, res) => {
-    const result = await foodsCollection.find().toArray()
+
+    let query = {}
+    if(req.query?.email){
+      query = {userEmail: req.query.email}
+    }
+
+    const result = await foodsCollection.find(query).toArray()
     res.send(result)
 })
 
@@ -71,6 +77,10 @@ app.get('/food/:id', async(req, res) => {
   const food = await foodsCollection.findOne(query)
   res.send(food)
 })
+
+
+
+// get single user posted foods
 
 
 
