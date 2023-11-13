@@ -106,6 +106,16 @@ app.get('/requestedFoods', async(req, res) => {
 
 
 
+// managed single food request 
+app.get('/manageRequest', async(req, res) => {
+  const query = {requestId : req.query.food}
+  const result = await requestCollection.find(query).toArray()
+  res.send(result)
+
+})
+
+
+
 
 
 app.get('/', (req, res) => {
