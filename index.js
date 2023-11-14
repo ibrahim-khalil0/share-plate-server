@@ -151,6 +151,24 @@ app.delete('/delete/:id', async(req, res) => {
 
 
 
+// manage food status 
+// update food 
+app.put('/updateStatus/:id', async(req, res) => {
+  const id = req.params.id
+  const query = {_id: new ObjectId(id)}
+  const options = {upsert: true}
+  const updatedStatus = req.body
+  const food = {
+    $set: {
+      manageStatus: updatedStatus.manageStatus
+    }
+  }
+  const result = await requestCollection.updateOne(query, food, options)
+  res.send(result)
+})
+
+
+
 
 
 
