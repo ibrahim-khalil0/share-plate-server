@@ -140,6 +140,16 @@ app.put('/updateFood/:id', async(req, res) => {
 
 
 
+// delete food 
+app.delete('/delete/:id', async(req, res) => {
+  const id = req.params.id
+  const query = { _id: new ObjectId(id)}
+
+  const result = await foodsCollection.deleteOne(query)
+  res.send(result)
+})
+
+
 
 
 
