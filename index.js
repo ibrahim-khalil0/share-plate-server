@@ -116,6 +116,32 @@ app.get('/manageRequest', async(req, res) => {
 
 
 
+// update food 
+app.put('/updateFood/:id', async(req, res) => {
+  const id = req.params.id
+  const query = {_id: new ObjectId(id)}
+  const options = {upsert: true}
+  const updatedFood = req.body
+  const food = {
+    $set: {
+      foodName: updatedFood.foodName,
+      foodImage: updatedFood.foodImage,
+      foodQuantity: updatedFood.foodQuantity,
+      pickupLocation: updatedFood.pickupLocation,
+      expiredDateTime: updatedFood.expiredDateTime,
+      status: updatedFood.status,
+      additionalNote: updatedFood.additionalNote
+    }
+  }
+  const result = await foodsCollection.updateOne(query, food, options)
+  res.send(result)
+})
+
+
+
+
+
+
 
 
 app.get('/', (req, res) => {
