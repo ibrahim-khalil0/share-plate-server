@@ -152,7 +152,6 @@ app.delete('/delete/:id', async(req, res) => {
 
 
 // manage food status 
-// update food 
 app.put('/updateStatus/:id', async(req, res) => {
   const id = req.params.id
   const query = {_id: new ObjectId(id)}
@@ -168,6 +167,16 @@ app.put('/updateStatus/:id', async(req, res) => {
 })
 
 
+
+
+// cancel food request
+app.delete('/cancel/:id', async(req, res) => {
+  const id = req.params.id
+  const query = { _id: new ObjectId(id)}
+
+  const result = await requestCollection.deleteOne(query)
+  res.send(result)
+})
 
 
 
